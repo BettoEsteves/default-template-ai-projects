@@ -12,6 +12,17 @@ Template governado e AI-first para iniciar projetos com produtividade alta, qual
 > [!IMPORTANT]
 > Este template força o fluxo correto: **primeiro planejar com contexto, depois implementar**.
 
+## 📌 Navegação rápida
+- [✨ O que este template entrega](#-o-que-este-template-entrega)
+- [🎬 Demo rápida (30 segundos)](#-demo-rápida-30-segundos)
+- [🚀 Início rápido (para iniciantes)](#-início-rápido-para-iniciantes)
+- [🧠 Prompt inicial recomendado para a IA](#-prompt-inicial-recomendado-para-a-ia)
+- [🔌 MCP e personalização por projeto](#-mcp-e-personalização-por-projeto)
+- [🤖 Fluxo padrão de agentes](#-fluxo-padrão-de-agentes)
+- [🛡️ Governança obrigatória](#️-governança-obrigatória)
+- [✅ Qualidade, CI/CD e segurança](#-qualidade-cicd-e-segurança)
+- [❓ FAQ (iniciantes)](#-faq-iniciantes)
+
 ## ✨ O que este template entrega
 - Estrutura única para Python, R/Posit e Rust.
 - Governança obrigatória desde o primeiro commit.
@@ -30,6 +41,17 @@ flowchart LR
   E --> F[Implementar]
   F --> G[Revisar segurança/governança]
 ```
+
+## 🎬 Demo rápida (30 segundos)
+```bash
+git clone https://github.com/BettoEsteves/default-template-ai-projects.git
+cd default-template-ai-projects
+pwsh -File infra/ci/setup-project.ps1
+docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d
+```
+
+> [!NOTE]
+> Para adicionar um GIF de demonstração no futuro, basta inserir o link logo abaixo desta seção (ex.: gravação curta do fluxo acima).
 
 ## 🚀 Início rápido (para iniciantes)
 1. Clone e abra o repositório na sua IDE com IA.
@@ -96,6 +118,13 @@ Regras essenciais:
 - Dependências: `.github/dependabot.yml`
 - Segurança: `pip-audit`, `detect-secrets`, `CodeQL`
 
+## 🧪 Comandos úteis
+- Validar bootstrap local: `pwsh -File infra/ci/setup-project.ps1`
+- Subir MCP no Docker: `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
+- Parar MCP no Docker: `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml down`
+- Rodar testes Python (sem e2e): `pytest -m "not e2e"`
+- Rodar validação Terraform: `terraform -chdir=infra/terraform fmt -check -recursive && terraform -chdir=infra/terraform init -backend=false && terraform -chdir=infra/terraform validate`
+
 ## 📚 Guias úteis
 - `docs/TEMPLATE_USAGE.md`
 - `docs/Cursor_Context.md`
@@ -121,3 +150,16 @@ Ao clonar este template, qualquer IDE com IA deve conseguir:
 - personalizar variáveis do projeto com segurança,
 - executar com padrão consistente de governança,
 - validar tudo com CI, segurança e IaC.
+
+## ❓ FAQ (iniciantes)
+**1) Preciso editar arquivo manualmente antes de começar?**
+- Só o `.env.mcp.local` (gerado pelo script). O restante já vem preparado.
+
+**2) O `PROJECT_NAME` é obrigatório mesmo?**
+- Sim. Cada novo projeto deve ter um nome próprio para contexto, rastreabilidade e integração MCP.
+
+**3) Se eu não usar Docker, consigo usar o template?**
+- Sim. Docker para MCP é opcional; você pode usar endpoints remotos no `.cursor/mcp.json`.
+
+**4) Posso pedir código para a IA imediatamente?**
+- Não é recomendado. Primeiro peça plano com critérios de aceite e riscos.
