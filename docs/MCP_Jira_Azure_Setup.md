@@ -45,14 +45,14 @@ Minimum values each user must set:
 ## Optional: run MCP with Docker
 If your MCP providers are containerized, start them with:
 
-`docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
+`docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
 
 Stop with:
 
-`docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml down`
+`docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml down`
 
 Notes:
-- The compose file is a template. Replace default image names with your provider images.
+- The compose file is a template. Define real `*_MCP_IMAGE` values in `.env.mcp.local`.
 - Keep `.cursor/mcp.json` pointing to the endpoints you actually expose (remote or localhost).
 
 ## Security Guidance

@@ -22,7 +22,8 @@ Provide reusable CI guidance and script conventions for this template.
 Quick start:
 1. Run `pwsh -File infra/ci/setup-project.ps1` to generate `.env.mcp.local` with `PROJECT_NAME`.
 2. Fill remaining MCP values in `.env.mcp.local`.
-3. Start MCP containers:
-	- `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
-4. Stop MCP containers:
-	- `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml down`
+3. Set real provider images in `*_MCP_IMAGE` variables (do not keep placeholder values).
+4. Start MCP containers:
+	- `docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
+5. Stop MCP containers:
+	- `docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml down`

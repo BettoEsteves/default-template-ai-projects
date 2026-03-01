@@ -58,8 +58,12 @@ flowchart LR
 git clone https://github.com/BettoEsteves/default-template-ai-projects.git
 cd default-template-ai-projects
 pwsh -File infra/ci/setup-project.ps1
-docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d
+docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d
 ```
+
+> [!NOTE]
+> Docker MCP is optional and requires real provider images in `.env.mcp.local` (`*_MCP_IMAGE`).
+> If you keep placeholder values (`replace-with-your-org`), `docker compose` will fail by design.
 
 <a id="en-clone-folder-name-vs-project_name"></a>
 ### Clone folder name vs `PROJECT_NAME` (very important)
@@ -89,7 +93,7 @@ pwsh -File infra/ci/setup-project.ps1 -ProjectName my-new-project
 3. Provide a real `PROJECT_NAME`.
 4. Fill remaining values in `.env.mcp.local`.
 5. (Optional) Start MCP with Docker:
-   - `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
+   - `docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
 6. Read governance files in this order:
    - `.ai/PROJECT_STRUCTURE.md`
    - `.ai/AGENT_CONTRACT.md`
@@ -149,8 +153,8 @@ Essential rules:
 <a id="en-useful-commands"></a>
 ### Useful commands
 - Bootstrap locally: `pwsh -File infra/ci/setup-project.ps1`
-- Start MCP with Docker: `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
-- Stop MCP with Docker: `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml down`
+- Start MCP with Docker: `docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
+- Stop MCP with Docker: `docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml down`
 - Python tests (no e2e): `pytest -m "not e2e"`
 - Terraform checks: `terraform -chdir=infra/terraform fmt -check -recursive && terraform -chdir=infra/terraform init -backend=false && terraform -chdir=infra/terraform validate`
 
@@ -219,8 +223,12 @@ flowchart LR
 git clone https://github.com/BettoEsteves/default-template-ai-projects.git
 cd default-template-ai-projects
 pwsh -File infra/ci/setup-project.ps1
-docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d
+docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d
 ```
+
+> [!NOTE]
+> Docker MCP é opcional e requer imagens reais de provedores no `.env.mcp.local` (`*_MCP_IMAGE`).
+> Se você mantiver os placeholders (`replace-with-your-org`), o `docker compose` falhará por design.
 
 <a id="pt-nome-da-pasta-clonada-vs-project_name"></a>
 ### Nome da pasta clonada vs `PROJECT_NAME` (muito importante)
@@ -250,7 +258,7 @@ pwsh -File infra/ci/setup-project.ps1 -ProjectName meu-novo-projeto
 3. Informe um `PROJECT_NAME` real.
 4. Complete os campos pendentes no `.env.mcp.local`.
 5. (Opcional) Suba MCP via Docker:
-   - `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
+   - `docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
 6. Leia os arquivos de governança nesta ordem:
    - `.ai/PROJECT_STRUCTURE.md`
    - `.ai/AGENT_CONTRACT.md`
@@ -310,8 +318,8 @@ Regras essenciais:
 <a id="pt-comandos-úteis"></a>
 ### Comandos úteis
 - Validar bootstrap local: `pwsh -File infra/ci/setup-project.ps1`
-- Subir MCP no Docker: `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
-- Parar MCP no Docker: `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml down`
+- Subir MCP no Docker: `docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
+- Parar MCP no Docker: `docker compose --profile mcp --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml down`
 - Rodar testes Python (sem e2e): `pytest -m "not e2e"`
 - Rodar validação Terraform: `terraform -chdir=infra/terraform fmt -check -recursive && terraform -chdir=infra/terraform init -backend=false && terraform -chdir=infra/terraform validate`
 
