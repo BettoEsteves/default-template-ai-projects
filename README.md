@@ -50,6 +50,25 @@ pwsh -File infra/ci/setup-project.ps1
 docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d
 ```
 
+### 🧩 Nome da pasta clonada vs `PROJECT_NAME` (muito importante)
+- `git clone ...` sem nome extra cria a pasta padrão `default-template-ai-projects`.
+- `PROJECT_NAME` é outro conceito: é o nome lógico do seu projeto dentro do `.env.mcp.local`.
+- Você pode manter a pasta padrão e ainda assim definir outro `PROJECT_NAME`.
+
+Exemplo mantendo nome padrão da pasta:
+```bash
+git clone https://github.com/BettoEsteves/default-template-ai-projects.git
+cd default-template-ai-projects
+pwsh -File infra/ci/setup-project.ps1
+```
+
+Exemplo já clonando com novo nome de pasta:
+```bash
+git clone https://github.com/BettoEsteves/default-template-ai-projects.git meu-novo-projeto
+cd meu-novo-projeto
+pwsh -File infra/ci/setup-project.ps1 -ProjectName meu-novo-projeto
+```
+
 > [!NOTE]
 > Para adicionar um GIF de demonstração no futuro, basta inserir o link logo abaixo desta seção (ex.: gravação curta do fluxo acima).
 
@@ -198,6 +217,25 @@ git clone https://github.com/BettoEsteves/default-template-ai-projects.git
 cd default-template-ai-projects
 pwsh -File infra/ci/setup-project.ps1
 docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d
+```
+
+### 🧩 Clone folder name vs `PROJECT_NAME` (very important)
+- `git clone ...` without an extra name creates the default folder `default-template-ai-projects`.
+- `PROJECT_NAME` is a different concept: your logical project identity in `.env.mcp.local`.
+- You can keep the default folder name and still define a custom `PROJECT_NAME`.
+
+Example keeping the default folder name:
+```bash
+git clone https://github.com/BettoEsteves/default-template-ai-projects.git
+cd default-template-ai-projects
+pwsh -File infra/ci/setup-project.ps1
+```
+
+Example cloning into a custom folder name:
+```bash
+git clone https://github.com/BettoEsteves/default-template-ai-projects.git my-new-project
+cd my-new-project
+pwsh -File infra/ci/setup-project.ps1 -ProjectName my-new-project
 ```
 
 ## 🚀 Quickstart (beginners)
