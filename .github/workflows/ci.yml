@@ -1,0 +1,191 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          required_paths=(
+            ".ai/PROJECT_STRUCTURE.md"
+            ".ai/AGENT_CONTRACT.md"
+            ".ai/rules.md"
+            ".ai/skills.md"
+            ".ai/subagents.md"
+            ".ai/commands.ai.md"
+            ".ai/task_state.md"
+            ".ai/decisions.md"
+            ".ai/STRUCTURE_CHECKLIST.md"
+            ".ai/prompts/system.md"
+            ".ai/prompts/coding.md"
+            ".ai/prompts/review.md"
+            ".ai/prompts/docs.md"
+            "docs/PRD.md"
+            "docs/Roadmap.md"
+            "docs/BoardTasks.md"
+            "docs/Architecture.md"
+            "docs/TEMPLATE_USAGE.md"
+            "docs/GitHubFlow.md"
+            "docs/PyCharm.md"
+            "docs/VibeCodingAgent.md"
+            "docs/GitHub_References.md"
+            "docs/Cursor_Context.md"
+            "docs/IDE_Context_Matrix.md"
+            "docs/Agent_Models_Recommendation.md"
+            "docs/MCP_Jira_Azure_Setup.md"
+            "docs/Productivity_CI_Playbook.md"
+            "docs/ADR"
+            "src/python"
+            "src/r"
+            "src/rust"
+            "tests/unit"
+            "tests/integration"
+            "tests/scripts"
+            "results"
+            "logs"
+            "infra/terraform/main.tf"
+            "infra/ci/README.md"
+            "infra/ci/docker-compose.mcp.yml"
+            "infra/ci/setup-project.ps1"
+            "infra/ci"
+            ".cursor/mcp.json"
+            ".cursor/plans/README.md"
+            ".github/workflows/ci.yml"
+            ".github/workflows/security.yml"
+            ".github/CODEOWNERS"
+            ".github/pull_request_template.md"
+            ".github/dependabot.yml"
+            ".github/copilot-instructions.md"
+            ".github/agents/task-planner.agent.md"
+            ".github/agents/swe-implementer.agent.md"
+            ".github/agents/security-reviewer.agent.md"
+            ".github/agents/terraform-iac-reviewer.agent.md"
+            ".github/agents/jira-workflow.agent.md"
+            ".github/agents/azure-devops-workflow.agent.md"
+            ".github/ISSUE_TEMPLATE/bug_report.md"
+            ".github/ISSUE_TEMPLATE/feature_request.md"
+            ".github/ISSUE_TEMPLATE/security_report.md"
+            ".github/ISSUE_TEMPLATE/config.yml"
+            ".editorconfig"
+            "README.md"
+            ".gitignore"
+            "requirements.txt"
+            "pyproject.toml"
+            "Cargo.toml"
+            "renv.lock"
+            "CONTRIBUTING.md"
+            "SECURITY.md"
+            "CODE_OF_CONDUCT.md"
+            "SUPPORT.md"
+            "AGENTS.md"
+            "CLAUDE.md"
+            ".rules"
+            ".cursorrules"
+            ".cursorignore"
+            ".env.mcp.example"
+          )
+          for path in "${required_paths[@]}"; do
+            if [ ! -e "$path" ]; then
+              echo "Missing required path: $path"
+              exit 1
+            fi
+          done
+
+      - name: Fail on forbidden tracked folders
+        shell: bash
+        run: |
+          set -euo pipefail
+          forbidden='^(results/|logs/|tests/scripts/)'
+          if git ls-files | grep -E "$forbidden"; then
+            echo "Forbidden tracked paths detected (results/, logs/, tests/scripts/)"
+            exit 1
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python baseline dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Python baseline check
+        run: |
+          python -m compileall src/python
+
+  python-tests:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run pytest (unit + integration)
+        run: |
+          pytest -m "not e2e" --maxfail=1 --disable-warnings --junitxml=pytest-report.xml --cov=src/python --cov-report=xml --cov-report=term-missing
+
+  terraform-checks:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform fmt
+        run: terraform -chdir=infra/terraform fmt -check -recursive
+
+      - name: Terraform init (no backend)
+        run: terraform -chdir=infra/terraform init -backend=false
+
+      - name: Terraform validate
+        run: terraform -chdir=infra/terraform validate
+
+  selenium-e2e:
+    runs-on: ubuntu-latest
+    needs: python-tests
+    env:
+      RUN_SELENIUM: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Selenium E2E
+        run: |
+          pytest -m e2e tests/integration/test_selenium_smoke.py --maxfail=1 --disable-warnings

@@ -1,0 +1,42 @@
+# Local-only outputs
+results/
+logs/
+tests/scripts/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python build/test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Rust build artifacts
+target/
+
+# R / Posit artifacts
+.Rhistory
+.RData
+.Rproj.user/
+
+# Terraform state and local data
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Environment files
+.env
+.env.*
+!.env.mcp.example
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.iml

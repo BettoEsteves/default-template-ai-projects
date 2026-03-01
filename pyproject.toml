@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "default-template-ai-projects"
+version = "0.1.0"
+description = "Governed AI-first project template"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit", "tests/integration"]
+addopts = "--strict-markers"
+markers = [
+	"unit: unit-level tests",
+	"integration: integration-level tests",
+	"e2e: end-to-end/browser-based tests"
+]

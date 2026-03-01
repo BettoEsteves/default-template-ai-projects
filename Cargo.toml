@@ -1,0 +1,7 @@
+[package]
+name = "default_template_ai_projects"
+version = "0.1.0"
+edition = "2021"
+description = "Governed AI-first project template (Rust baseline)"
+
+[dependencies]

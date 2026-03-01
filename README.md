@@ -1,2 +1,123 @@
 # default-template-ai-projects
-Deafult template for AI Projects 
+
+<p align="center">
+  <a href="#"><img alt="AI-First" src="https://img.shields.io/badge/AI--First-Template-7C3AED?style=for-the-badge"></a>
+  <a href="#"><img alt="Governance" src="https://img.shields.io/badge/Governance-Required-2563EB?style=for-the-badge"></a>
+  <a href="#"><img alt="CI/CD" src="https://img.shields.io/badge/CI%2FCD-Ready-059669?style=for-the-badge"></a>
+  <a href="#"><img alt="MCP" src="https://img.shields.io/badge/MCP-Jira%20%7C%20Azure%20%7C%20Figma%20%7C%20Notion-F59E0B?style=for-the-badge"></a>
+</p>
+
+Template governado e AI-first para iniciar projetos com produtividade alta, qualidade de código, CI/CD automatizado, IaC e contexto operacional para IDEs com IA.
+
+> [!IMPORTANT]
+> Este template força o fluxo correto: **primeiro planejar com contexto, depois implementar**.
+
+## ✨ O que este template entrega
+- Estrutura única para Python, R/Posit e Rust.
+- Governança obrigatória desde o primeiro commit.
+- Compatibilidade com IDEs com IA (Cursor, VS Code/Copilot, Zed, Trae, Replit).
+- CI/CD e segurança já preparados.
+- MCP para Jira, Azure DevOps, Figma e Notion.
+- Bootstrap guiado com `PROJECT_NAME` obrigatório por projeto.
+
+## 🧭 Fluxo visual (simples)
+```mermaid
+flowchart LR
+  A[Clone do template] --> B[setup-project.ps1]
+  B --> C[Preencher .env.mcp.local]
+  C --> D[Carregar contexto MCP]
+  D --> E[Planejar com agentes]
+  E --> F[Implementar]
+  F --> G[Revisar segurança/governança]
+```
+
+## 🚀 Início rápido (para iniciantes)
+1. Clone e abra o repositório na sua IDE com IA.
+2. Execute o bootstrap:
+	- `pwsh -File infra/ci/setup-project.ps1`
+3. Informe um `PROJECT_NAME` real (obrigatório em cada novo projeto).
+4. Complete os campos pendentes no `.env.mcp.local`.
+5. (Opcional) Suba MCP via Docker:
+	- `docker compose --env-file .env.mcp.local -f infra/ci/docker-compose.mcp.yml up -d`
+6. Leia os arquivos de governança nesta ordem:
+	- `.ai/PROJECT_STRUCTURE.md`
+	- `.ai/AGENT_CONTRACT.md`
+	- `.ai/rules.md`
+	- `.ai/STRUCTURE_CHECKLIST.md`
+7. Peça para a IA **planejar primeiro**. Só depois aprove implementação.
+
+> [!TIP]
+> Se você só fizer 1 coisa após clonar: rode `infra/ci/setup-project.ps1`.
+
+## 🧠 Prompt inicial recomendado para a IA
+Use este prompt no primeiro comando da IDE:
+
+"Leia e aplique como contexto obrigatório: `.ai/PROJECT_STRUCTURE.md`, `.ai/AGENT_CONTRACT.md`, `.ai/rules.md`, `.ai/STRUCTURE_CHECKLIST.md`, `docs/TEMPLATE_USAGE.md`, `docs/VibeCodingAgent.md`, `docs/MCP_Jira_Azure_Setup.md`. Em seguida, carregue contexto de Jira/Azure/Figma/Notion via MCP, proponha plano de execução com critérios de aceite, riscos e validação. Não implemente código antes da aprovação do plano."
+
+## 🔌 MCP e personalização por projeto
+Cada projeto deve ter sua própria identidade e credenciais:
+- `PROJECT_NAME` obrigatório no `.env.mcp.local`
+- Tokens e identificadores MCP por usuário/time
+- `.env.mcp.local` **não é versionado**
+
+Arquivos principais:
+- `.env.mcp.example` (template de variáveis)
+- `.cursor/mcp.json` (bindings MCP no workspace)
+- `infra/ci/setup-project.ps1` (gera e valida configuração local)
+- `infra/ci/docker-compose.mcp.yml` (MCP containerizado)
+
+## 🤖 Fluxo padrão de agentes
+1. Carregar contexto de work items:
+	- `.github/agents/jira-workflow.agent.md`
+	- `.github/agents/azure-devops-workflow.agent.md`
+2. Carregar contexto de design/documentação (Figma/Notion via MCP).
+3. Planejar com `.github/agents/task-planner.agent.md`.
+4. Implementar com `.github/agents/swe-implementer.agent.md`.
+5. Revisar segurança com `.github/agents/security-reviewer.agent.md`.
+6. Para IaC, usar também `.github/agents/terraform-iac-reviewer.agent.md`.
+
+## 🛡️ Governança obrigatória
+Arquivos mandatórios:
+- `.ai/PROJECT_STRUCTURE.md`
+- `.ai/AGENT_CONTRACT.md`
+- `.ai/rules.md`
+- `.ai/STRUCTURE_CHECKLIST.md`
+
+Regras essenciais:
+- Não criar arquivos fora da estrutura governada sem atualização formal.
+- Não versionar `results/`, `logs/` e `tests/scripts/`.
+- Atualizar documentação/checklist quando mudar comportamento, política ou estrutura.
+
+## ✅ Qualidade, CI/CD e segurança
+- Workflow principal: `.github/workflows/ci.yml`
+- Workflow de segurança: `.github/workflows/security.yml`
+- Terraform baseline: `fmt`, `init -backend=false`, `validate`
+- Testes Python: `unit`, `integration`, `e2e`
+- Dependências: `.github/dependabot.yml`
+- Segurança: `pip-audit`, `detect-secrets`, `CodeQL`
+
+## 📚 Guias úteis
+- `docs/TEMPLATE_USAGE.md`
+- `docs/Cursor_Context.md`
+- `docs/IDE_Context_Matrix.md`
+- `docs/VibeCodingAgent.md`
+- `docs/MCP_Jira_Azure_Setup.md`
+- `docs/Productivity_CI_Playbook.md`
+- `docs/GitHubFlow.md`
+- `docs/PyCharm.md`
+
+## 🧾 Políticas do repositório
+- `CONTRIBUTING.md`
+- `SECURITY.md`
+- `CODE_OF_CONDUCT.md`
+- `SUPPORT.md`
+- `.github/CODEOWNERS`
+- `.github/pull_request_template.md`
+
+## 🎯 Resultado esperado
+Ao clonar este template, qualquer IDE com IA deve conseguir:
+- carregar contexto certo desde o início,
+- planejar antes de codar,
+- personalizar variáveis do projeto com segurança,
+- executar com padrão consistente de governança,
+- validar tudo com CI, segurança e IaC.

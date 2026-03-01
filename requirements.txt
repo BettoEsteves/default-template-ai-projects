@@ -1,0 +1,7 @@
+# Python baseline for AI/data projects
+pip>=24.0
+setuptools>=70.0
+wheel>=0.43
+pytest>=8.0
+pytest-cov>=5.0
+selenium>=4.20

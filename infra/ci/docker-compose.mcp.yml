@@ -1,0 +1,41 @@
+services:
+  jira-mcp:
+    image: ${JIRA_MCP_IMAGE:-ghcr.io/replace-with-your-org/jira-mcp:latest}
+    container_name: jira-mcp
+    restart: unless-stopped
+    ports:
+      - "${JIRA_MCP_PORT:-7810}:8080"
+    environment:
+      JIRA_MCP_TOKEN: ${JIRA_MCP_TOKEN}
+      JIRA_WORKSPACE: ${JIRA_WORKSPACE}
+
+  azure-devops-mcp:
+    image: ${AZURE_MCP_IMAGE:-ghcr.io/replace-with-your-org/azure-devops-mcp:latest}
+    container_name: azure-devops-mcp
+    restart: unless-stopped
+    ports:
+      - "${AZURE_MCP_PORT:-7811}:8080"
+    environment:
+      AZURE_MCP_TOKEN: ${AZURE_MCP_TOKEN}
+      AZURE_ORG: ${AZURE_ORG}
+      AZURE_PROJECT: ${AZURE_PROJECT}
+
+  figma-mcp:
+    image: ${FIGMA_MCP_IMAGE:-ghcr.io/replace-with-your-org/figma-mcp:latest}
+    container_name: figma-mcp
+    restart: unless-stopped
+    ports:
+      - "${FIGMA_MCP_PORT:-7812}:8080"
+    environment:
+      FIGMA_MCP_TOKEN: ${FIGMA_MCP_TOKEN}
+      FIGMA_TEAM: ${FIGMA_TEAM}
+
+  notion-mcp:
+    image: ${NOTION_MCP_IMAGE:-ghcr.io/replace-with-your-org/notion-mcp:latest}
+    container_name: notion-mcp
+    restart: unless-stopped
+    ports:
+      - "${NOTION_MCP_PORT:-7813}:8080"
+    environment:
+      NOTION_MCP_TOKEN: ${NOTION_MCP_TOKEN}
+      NOTION_WORKSPACE: ${NOTION_WORKSPACE}

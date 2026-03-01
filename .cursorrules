@@ -1,0 +1,15 @@
+# Cursor Rules
+
+## Context and Scope
+- Treat `.ai/PROJECT_STRUCTURE.md`, `.ai/AGENT_CONTRACT.md`, and `.ai/rules.md` as mandatory context.
+- Keep edits within governed folders and files.
+
+## Process
+- Use Plan Mode for complex changes.
+- Ask for missing acceptance criteria when scope is ambiguous.
+- Validate with tests/checks relevant to changed areas.
+
+## Quality Gates
+- Keep CI checks passing.
+- Do not track local-only paths (`results/`, `logs/`, `tests/scripts/`).
+- Update docs and checklist when behavior/policy/structure changes.

@@ -1,0 +1,7 @@
+# Default ownership model for governance-first template
+* @org/platform-team
+
+# Governance and delivery policy files
+/.ai/ @org/platform-team
+/.github/workflows/ @org/platform-team
+/infra/terraform/ @org/platform-team

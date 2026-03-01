@@ -1,0 +1,37 @@
+{
+  "mcpServers": {
+    "jira": {
+      "url": "${env:JIRA_MCP_URL}",
+      "headers": {
+        "Authorization": "Bearer ${env:JIRA_MCP_TOKEN}",
+        "X-Workspace": "${env:JIRA_WORKSPACE}",
+        "X-Project-Name": "${env:PROJECT_NAME}"
+      }
+    },
+    "azure-devops": {
+      "url": "${env:AZURE_MCP_URL}",
+      "headers": {
+        "Authorization": "Bearer ${env:AZURE_MCP_TOKEN}",
+        "X-Organization": "${env:AZURE_ORG}",
+        "X-Project": "${env:AZURE_PROJECT}",
+        "X-Project-Name": "${env:PROJECT_NAME}"
+      }
+    },
+    "figma": {
+      "url": "${env:FIGMA_MCP_URL}",
+      "headers": {
+        "Authorization": "Bearer ${env:FIGMA_MCP_TOKEN}",
+        "X-Team": "${env:FIGMA_TEAM}",
+        "X-Project-Name": "${env:PROJECT_NAME}"
+      }
+    },
+    "notion": {
+      "url": "${env:NOTION_MCP_URL}",
+      "headers": {
+        "Authorization": "Bearer ${env:NOTION_MCP_TOKEN}",
+        "X-Workspace": "${env:NOTION_WORKSPACE}",
+        "X-Project-Name": "${env:PROJECT_NAME}"
+      }
+    }
+  }
+}

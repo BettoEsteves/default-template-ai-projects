@@ -1,0 +1,13 @@
+# Cursor indexing ignore patterns
+# Keep this focused to avoid excluding important source files.
+
+results/**
+logs/**
+tests/scripts/**
+**/*.parquet
+**/*.feather
+**/*.h5
+**/*.pkl
+**/*.joblib
+**/node_modules/**
+**/target/**

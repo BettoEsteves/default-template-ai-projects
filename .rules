@@ -1,0 +1,7 @@
+# Project Rules (Zed-compatible)
+
+- Respect `.ai/PROJECT_STRUCTURE.md` and never drift structure without governance updates.
+- Follow repository coding, naming, and documentation standards.
+- Keep all changes testable and auditable.
+- Block secrets and local-only artifact commits.
+- Require updates to docs/checklist when structure or policies change.
